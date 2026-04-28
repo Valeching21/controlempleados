@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Empleados</title>
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body class="home-page">
+
+<nav class="menu-admin">
+
+    <div sec:authorize="hasRole('ADMIN')" class="menu-links">
+        <a href="/home">Inicio</a>
+        <a href="/empleados/guardar">Crear Empleado</a>
+        <a href="/empleados">Administrar Empleados</a>
+        <a href="/horarios">Horarios</a>
+    </div>
+
+    <div sec:authorize="hasRole('EMPLEADO')" class="menu-links">
+        <a href="/home">Inicio</a>
+        <a href="/horarios">Horarios</a>
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <h1 class="titulo-admin" sec:authorize="hasRole('ADMIN')">
+        Panel de Administrador
+    </h1>
+
+    <h2 class="bienvenida">
+        Bienvenido,
+        <span th:text="${usuario != null ? usuario.nombre : 'Usuario'}"></span>
+    </h2>
+
+    <div class="perfil">
+
+        <h3>Mi Perfil</h3>
+
+        <form th:action="@{/perfil/actualizar}" method="post">
+
+            <input type="hidden" name="id"
+                   th:value="${usuario != null ? usuario.id : ''}">
+
+            <label>Nombre</label>
+            <input type="text"
+                   name="nombre"
+                   th:value="${usuario != null ? usuario.nombre : ''}"
+                   required>
+
+            <label>Cédula</label>
+            <input type="text"
+                   name="cedula"
+                   th:value="${usuario != null ? usuario.cedula : ''}"
+                   readonly
+                   class="cedula-bloqueada">
+
+            <label>Usuario</label>
+            <input type="text"
+                   name="username"
+                   th:value="${usuario != null ? usuario.username : ''}"
+                   required>
+
+            <label>Correo</label>
+            <input type="email"
+                   name="correo"
+                   th:value="${usuario != null ? usuario.correo : ''}"
+                   required>
+
+            <button type="submit">Guardar Cambios</button>
+
+        </form>
+
+    </div>
+
+    <form th:action="@{/logout}" method="post">
+        <button class="btn-salir" type="submit">Cerrar Sesión</button>
+    </form>
+
+</div>
+
+</body>
+</html>

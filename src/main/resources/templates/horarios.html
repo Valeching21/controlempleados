@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Horarios</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body class="horarios-page">
+
+    <nav class="menu-admin">
+
+        <div sec:authorize="hasRole('ADMIN')" class="menu-links">
+            <a href="/home">Inicio</a>
+            <a href="/empleados/guardar">Crear Empleado</a>
+            <a href="/empleados">Administrar Empleados</a>
+            <a href="/horarios">Horarios</a>
+        </div>
+
+        <div sec:authorize="hasRole('EMPLEADO')" class="menu-links">
+            <a href="/home">Inicio</a>
+            <a href="/horarios">Horarios</a>
+        </div>
+
+    </nav>
+
+    <h2>Gestión de Horarios</h2>
+
+    <div class="container">
+
+        
+        <div class="acciones">
+            <form th:action="@{/horarios/entrada}" method="post">
+                <button class="btn btn-success">Marcar Entrada</button>
+            </form>
+
+            <form th:action="@{/horarios/salida}" method="post">
+                <button class="btn btn-danger">Marcar Salida</button>
+            </form>
+        </div>
+
+        <br>
+
+        
+        <div th:if="${error}" class="error">
+            <p th:text="${error}"></p>
+        </div>
+
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Entrada</th>
+                    <th>Salida</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="h : ${horarios}"
+                    th:class="${h.horaSalida == null} ? 'fila-activa' : 'fila-inactiva'">
+
+                    <td th:text="${h.usuario.nombre}"></td>
+
+                    <td th:text="${#temporals.format(h.horaEntrada, 'dd/MM/yyyy HH:mm')}"></td>
+
+                    <td th:text="${h.horaSalida != null ? #temporals.format(h.horaSalida, 'dd/MM/yyyy HH:mm') : '---'}"></td>
+
+                    <td>
+                        <span th:class="${h.horaSalida == null} ? 'en-linea' : 'fuera-linea'"
+                            th:text="${h.horaSalida == null ? 'En línea' : 'Fuera de línea'}">
+                        </span>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+       <div sec:authorize="hasRole('ADMIN')">
+            <a href="/horarios/reporte-pdf">
+                <button class="btn-reporte">📄 Generar PDF</button>
+            </a>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Control de Empleados</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+    </head>
+    <body class="registro-page">
+
+        <form class="container" th:action="@{/registro}" method="post">
+            <h2>Registro de nuevo usuario</h2>
+            
+            <label>Nombre</label>
+            <input type="text" name="nombre">
+
+            <label>Cédula</label>
+            <input type="text" name="cedula">
+
+            <label>Correo</label>
+            <input type="email" name="correo" required>
+
+            <label>Usuario</label>
+            <input type="text" name="username">
+
+            <label>Contraseña</label>
+            <input type="password" name="password">
+
+            <br><br>
+
+            <button type="submit">Registrarse</button>
+            <button type="button" onclick="window.location.href='/login'">
+                Iniciar sesión
+            </button>
+
+        </form>
+
+    </body>
+</html>
