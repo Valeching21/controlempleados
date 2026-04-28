@@ -1,17 +1,42 @@
+<!--
+==========================================
+PÁGINA DE LOGIN
+==========================================
+Permite al usuario autenticarse en el sistema.
+
+Incluye:
+- Formulario de login
+- Manejo de errores
+- Mensaje de logout
+- Acceso a registro
+==========================================
+-->
+
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Empleados</title>
+    <title>Login - Control de Empleados</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
+
 <body class="login-page">
-    
 
     <form class="container" th:action="@{/login}" method="post">
 
         <h2>Iniciar sesión</h2>
+
+        <!-- ERROR DE LOGIN -->
+        <div th:if="${param.error}" class="mensaje-error">
+            Usuario o contraseña incorrectos
+        </div>
+
+        <!-- LOGOUT EXITOSO -->
+        <div th:if="${param.logout}" class="mensaje-exito">
+            Sesión cerrada correctamente
+        </div>
 
         <label>Usuario</label>
         <input type="text" name="username" required>
@@ -24,6 +49,7 @@
         <br><br>
 
         <button type="submit">Ingresar</button>
+
         <button type="button" onclick="window.location.href='/registro'">
             Registrarse
         </button>

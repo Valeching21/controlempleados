@@ -1,39 +1,62 @@
+<!--
+==========================================
+PÁGINA DE REGISTRO
+==========================================
+Permite crear un nuevo usuario en el sistema.
+
+Incluye:
+- Formulario de registro
+- Validaciones básicas
+- Mensajes de error
+- Navegación al login
+==========================================
+-->
+
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Control de Empleados</title>
-        <link rel="stylesheet" th:href="@{/css/styles.css}">
-    </head>
-    <body class="registro-page">
 
-        <form class="container" th:action="@{/registro}" method="post">
-            <h2>Registro de nuevo usuario</h2>
-            
-            <label>Nombre</label>
-            <input type="text" name="nombre">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Control de Empleados</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
 
-            <label>Cédula</label>
-            <input type="text" name="cedula">
+<body class="registro-page">
 
-            <label>Correo</label>
-            <input type="email" name="correo" required>
+    <form class="container" th:action="@{/registro}" method="post">
 
-            <label>Usuario</label>
-            <input type="text" name="username">
+        <h2>Registro de nuevo usuario</h2>
 
-            <label>Contraseña</label>
-            <input type="password" name="password">
+        <!-- MENSAJE DE ERROR -->
+        <div th:if="${error}" class="mensaje-error">
+            <p th:text="${error}"></p>
+        </div>
 
-            <br><br>
+        <label>Nombre</label>
+        <input type="text" name="nombre" required>
 
-            <button type="submit">Registrarse</button>
-            <button type="button" onclick="window.location.href='/login'">
-                Iniciar sesión
-            </button>
+        <label>Cédula</label>
+        <input type="text" name="cedula" required>
 
-        </form>
+        <label>Correo</label>
+        <input type="email" name="correo" required>
 
-    </body>
+        <label>Usuario</label>
+        <input type="text" name="username" required>
+
+        <label>Contraseña</label>
+        <input type="password" name="password" required>
+
+        <br><br>
+
+        <button type="submit">Registrarse</button>
+
+        <button type="button" onclick="window.location.href='/login'">
+            Iniciar sesión
+        </button>
+
+    </form>
+
+</body>
 </html>

@@ -1,5 +1,20 @@
+<!--
+==========================================
+PÁGINA DE HORARIOS
+==========================================
+Permite:
+- Registrar entrada y salida
+- Visualizar historial de horarios
+- Ver estado (En línea / Fuera de línea)
+- Generar reporte en PDF (solo ADMIN)
+==========================================
+-->
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <title>Horarios</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
@@ -7,8 +22,10 @@
 
 <body class="horarios-page">
 
+    <!-- MENÚ -->
     <nav class="menu-admin">
 
+        <!-- ADMIN -->
         <div sec:authorize="hasRole('ADMIN')" class="menu-links">
             <a href="/home">Inicio</a>
             <a href="/empleados/guardar">Crear Empleado</a>
@@ -16,6 +33,7 @@
             <a href="/horarios">Horarios</a>
         </div>
 
+        <!-- EMPLEADO -->
         <div sec:authorize="hasRole('EMPLEADO')" class="menu-links">
             <a href="/home">Inicio</a>
             <a href="/horarios">Horarios</a>
@@ -27,25 +45,25 @@
 
     <div class="container">
 
-        
+        <!-- ACCIONES -->
         <div class="acciones">
             <form th:action="@{/horarios/entrada}" method="post">
-                <button class="btn btn-success">Marcar Entrada</button>
+                <button class="btn-success">Marcar Entrada</button>
             </form>
 
             <form th:action="@{/horarios/salida}" method="post">
-                <button class="btn btn-danger">Marcar Salida</button>
+                <button class="btn-danger">Marcar Salida</button>
             </form>
         </div>
 
         <br>
 
-        
+        <!-- MENSAJE ERROR -->
         <div th:if="${error}" class="error">
             <p th:text="${error}"></p>
         </div>
 
-        
+        <!-- TABLA -->
         <table>
             <thead>
                 <tr>
@@ -64,11 +82,13 @@
 
                     <td th:text="${#temporals.format(h.horaEntrada, 'dd/MM/yyyy HH:mm')}"></td>
 
-                    <td th:text="${h.horaSalida != null ? #temporals.format(h.horaSalida, 'dd/MM/yyyy HH:mm') : '---'}"></td>
+                    <td th:text="${h.horaSalida != null 
+                        ? #temporals.format(h.horaSalida, 'dd/MM/yyyy HH:mm') 
+                        : '---'}"></td>
 
                     <td>
                         <span th:class="${h.horaSalida == null} ? 'en-linea' : 'fuera-linea'"
-                            th:text="${h.horaSalida == null ? 'En línea' : 'Fuera de línea'}">
+                              th:text="${h.horaSalida == null ? 'En línea' : 'Fuera de línea'}">
                         </span>
                     </td>
 
@@ -76,14 +96,14 @@
             </tbody>
         </table>
 
-       <div sec:authorize="hasRole('ADMIN')">
+        <!-- BOTÓN PDF SOLO ADMIN -->
+        <div sec:authorize="hasRole('ADMIN')">
             <a href="/horarios/reporte-pdf">
                 <button class="btn-reporte">📄 Generar PDF</button>
             </a>
         </div>
+
     </div>
-
-
 
 </body>
 </html>

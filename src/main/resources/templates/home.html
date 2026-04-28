@@ -1,3 +1,16 @@
+<!--
+==========================================
+PÁGINA DE INICIO (HOME)
+==========================================
+Muestra:
+- Menú según rol (ADMIN / EMPLEADO)
+- Bienvenida personalizada
+- Información del usuario
+- Edición del perfil
+- Cierre de sesión
+==========================================
+-->
+
 <!DOCTYPE html>
 <html lang="es"
       xmlns:th="http://www.thymeleaf.org"
@@ -6,15 +19,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Empleados</title>
+    <title>Inicio - Control de Empleados</title>
 
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 
 <body class="home-page">
 
+<!-- MENÚ DINÁMICO POR ROL -->
 <nav class="menu-admin">
 
+    <!-- ADMIN -->
     <div sec:authorize="hasRole('ADMIN')" class="menu-links">
         <a href="/home">Inicio</a>
         <a href="/empleados/guardar">Crear Empleado</a>
@@ -22,6 +37,7 @@
         <a href="/horarios">Horarios</a>
     </div>
 
+    <!-- EMPLEADO -->
     <div sec:authorize="hasRole('EMPLEADO')" class="menu-links">
         <a href="/home">Inicio</a>
         <a href="/horarios">Horarios</a>
@@ -31,22 +47,27 @@
 
 <div class="container">
 
-    <h1 class="titulo-admin" sec:authorize="hasRole('ADMIN')">
+    <!-- TÍTULO ADMIN -->
+    <h1 sec:authorize="hasRole('ADMIN')">
         Panel de Administrador
     </h1>
 
-    <h2 class="bienvenida">
+    <!-- BIENVENIDA -->
+    <h2>
         Bienvenido,
         <span th:text="${usuario != null ? usuario.nombre : 'Usuario'}"></span>
     </h2>
 
+    <!-- PERFIL -->
     <div class="perfil">
 
         <h3>Mi Perfil</h3>
 
-        <form th:action="@{/perfil/actualizar}" method="post">
+        <form th:action="@{/home}" method="post">
 
-            <input type="hidden" name="id"
+            <!-- ID oculto -->
+            <input type="hidden"
+                   name="id"
                    th:value="${usuario != null ? usuario.id : ''}">
 
             <label>Nombre</label>
@@ -80,6 +101,7 @@
 
     </div>
 
+    <!-- LOGOUT -->
     <form th:action="@{/logout}" method="post">
         <button class="btn-salir" type="submit">Cerrar Sesión</button>
     </form>

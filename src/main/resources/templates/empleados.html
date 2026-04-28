@@ -1,68 +1,108 @@
+<!--
+==========================================
+LISTA DE EMPLEADOS
+==========================================
+Muestra todos los empleados en una tabla.
+
+Funcionalidades:
+- Visualizar empleados
+- Editar
+- Eliminar
+- Navegación entre módulos
+
+Uso de Thymeleaf para render dinámico
+==========================================
+-->
+
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Empleados</title>
+    <title>Lista de Empleados</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
+
 <body class="empleados-page">
-    
+
+    <!-- MENÚ -->
     <nav class="menu-admin">
         <div class="menu-links">
             <a href="/home">Inicio</a>
-            <a href="/empleados/guardar">Crear Empleado</a>
+
+            <!-- SOLO ADMIN VE CREAR -->
+            <a href="/empleados/guardar" sec:authorize="hasRole('ADMIN')">
+                Crear Empleado
+            </a>
+
             <a href="/horarios">Horarios</a>
         </div>
     </nav>
 
     <h2>Lista de Empleados</h2>
 
-    <table class="container" border="1">
+    <!-- TABLA -->
+    <table class="container">
 
-        <th>Nombre</th>
-        <th>Apellidos</th>
-        <th>Cédula</th>
-        <th>Correo</th>
-        <th>Teléfono</th>
-        <th>Edad</th>
-        <th>Puesto</th>
-        <th>Acciones</th>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Cédula</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Edad</th>
+                <th>Puesto</th>
 
-        <tr th:each="e : ${empleados}">
-            <td th:text="${e.nombre}"></td>
-            <td th:text="${e.apellidos}"></td>
-            <td th:text="${e.cedula}"></td>
-            <td th:text="${e.correo}"></td>
-            <td th:text="${e.telefono}"></td>
-            <td th:text="${e.edad}"></td>
-            <td th:text="${e.puesto}"></td>
+                <!-- SOLO ADMIN -->
+                <th sec:authorize="hasRole('ADMIN')">Acciones</th>
+            </tr>
+        </thead>
 
-            <td>
-                <a th:href="@{/empleados/editar/{id}(id=${e.id})}">
-                    <button class="btn-editar" type="button">Editar</button>
-                </a>
+        <tbody>
+            <tr th:each="e : ${empleados}">
+                <td th:text="${e.nombre}"></td>
+                <td th:text="${e.apellidos}"></td>
+                <td th:text="${e.cedula}"></td>
+                <td th:text="${e.correo}"></td>
+                <td th:text="${e.telefono}"></td>
+                <td th:text="${e.edad}"></td>
+                <td th:text="${e.puesto}"></td>
 
-                <a th:href="@{/empleados/eliminar/{id}(id=${e.id})}"
-                  onclick="return confirmarEliminar()">
-                    <button class="btn-eliminar">Eliminar</button>
-                </a>
-            </td>
-        </tr>
+                <!-- BOTONES SOLO ADMIN -->
+                <td sec:authorize="hasRole('ADMIN')">
+
+                    <a th:href="@{/empleados/editar/{id}(id=${e.id})}">
+                        <button class="btn-editar" type="button">Editar</button>
+                    </a>
+
+                    <a th:href="@{/empleados/eliminar/{id}(id=${e.id})}"
+                       onclick="return confirmarEliminar()">
+                        <button class="btn-eliminar" type="button">Eliminar</button>
+                    </a>
+
+                </td>
+            </tr>
+        </tbody>
+
     </table>
 
+    <!-- BOTÓN VOLVER -->
     <div class="volver-container">
         <a th:href="@{/home}">
             <button class="btn-volver">Volver</button>
         </a>
     </div>
 
-    
+    <!-- SCRIPT CONFIRMACIÓN -->
+    <script>
+        function confirmarEliminar(){
+            return confirm("¿Seguro que deseas eliminar este empleado?");
+        }
+    </script>
 
 </body>
-<script>
-function confirmarEliminar(){
-    return confirm("¿Seguro que deseas eliminar este empleado?");
-}
-</script>
 </html>

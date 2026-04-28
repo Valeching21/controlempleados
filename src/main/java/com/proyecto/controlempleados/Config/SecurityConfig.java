@@ -1,52 +1,67 @@
 package com.proyecto.controlempleados.Config;
 
-//Configuración de seguridad con Spring Security
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-//Clase de configuración de seguridad
+/**
+ * Clase de configuración de seguridad del sistema de control de empleados.
+ * 
+ * Se encarga de:
+ * - Definir las rutas públicas y protegidas
+ * - Controlar el acceso según roles (ADMIN / EMPLEADO)
+ * - Configurar el login personalizado
+ * - Manejar el cierre de sesión
+ * - Encriptar contraseñas con BCrypt
+ */
 @Configuration
 public class SecurityConfig {
 
-    //Encriptación de contraseñas
+    /**
+     * Bean encargado de encriptar las contraseñas usando BCrypt.
+     * Esto evita almacenar contraseñas en texto plano.
+     */
     @Bean 
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
-    //Configuración de seguridad
+    /**
+     * Configura las reglas de seguridad de la aplicación.
+     * Define qué rutas son públicas, cuáles requieren autenticación
+     * y cuáles están restringidas por rol.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http
             .authorizeHttpRequests(auth -> auth
 
-                //Rutas públicas
+                // Rutas públicas accesibles sin autenticación
                 .requestMatchers("/login","/registro","/css/**").permitAll()
 
-                //Solo ADMIN puede acceder a empleados
+                // Solo usuarios con rol ADMIN pueden gestionar empleados
                 .requestMatchers("/empleados/**").hasRole("ADMIN")
 
-                //SOLO ADMIN puede generar reportes
+                // Solo ADMIN puede generar reportes en PDF
                 .requestMatchers("/horarios/reporte-pdf").hasRole("ADMIN")
 
-                //Todo lo demás requiere login
+                //Cualquier otra ruta requiere usuario autenticado
                 .anyRequest().authenticated()
             )
 
-            //Login personalizado
+            //Configuración del login personalizado
             .formLogin(login -> login
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/home", true)
+                    .loginPage("/login") // Vista personalizada
+                    .defaultSuccessUrl("/home", true) // Redirección al iniciar sesión
                     .permitAll()
             )
 
-            //Logout
+            //Configuración del logout
             .logout(logout -> logout
-                    .logoutSuccessUrl("/login")
+                    .logoutSuccessUrl("/login") // Redirige al login al cerrar sesión
                     .permitAll()
             );
 

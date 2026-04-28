@@ -9,6 +9,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Servicio personalizado que implementa UserDetailsService.
+ * 
+ * Se encarga de:
+ * - Cargar un usuario desde la base de datos
+ * - Convertirlo en un objeto UserDetails
+ * - Asignar sus roles como autoridades de Spring Security
+ * 
+ * Este servicio es utilizado automáticamente por Spring Security
+ * durante el proceso de autenticación (login).
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -18,6 +29,15 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    /**
+     * Carga un usuario por su username desde la base de datos.
+     * 
+     * Si el usuario existe:
+     * - Retorna un objeto UserDetails con username, password y roles
+     * 
+     * Si no existe:
+     * - Lanza excepción UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -27,7 +47,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new User(
                 usuario.getUsername(),
                 usuario.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_" + usuario.getRol().name()))
+                List.of(
+                        // Se asigna el rol con el formato requerido por Spring Security
+                        new SimpleGrantedAuthority("ROLE_" + usuario.getRol().name())
+                )
         );
     }
 }

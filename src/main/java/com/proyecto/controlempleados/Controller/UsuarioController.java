@@ -8,11 +8,26 @@ import com.proyecto.controlempleados.model.Usuario;
 import com.proyecto.controlempleados.service.UsuarioService;
 import com.proyecto.controlempleados.Repository.UsuarioRepository;
 
+/**
+ * Controlador encargado de la gestión de usuarios (solo ADMIN).
+ * 
+ * Funcionalidades:
+ * - Listar usuarios
+ * - Crear nuevos usuarios
+ * - Editar usuarios existentes
+ * - Eliminar usuarios
+ * 
+ * Aplica validaciones a través del servicio para evitar duplicados
+ * de cédula y username.
+ */
 @Controller
 @RequestMapping("/admin/usuarios")
 public class UsuarioController {
 
+    // Servicio que contiene la lógica de negocio de usuarios
     private final UsuarioService usuarioService;
+
+    // Repositorio para consultas directas
     private final UsuarioRepository usuarioRepository;
 
     public UsuarioController(UsuarioService usuarioService, UsuarioRepository usuarioRepository){
@@ -20,21 +35,29 @@ public class UsuarioController {
         this.usuarioRepository = usuarioRepository;
     }
 
-    // lista todos los usuarios, obtenemos la lista de usuarios desde el servicio y la pasamos al modelo para mostrarla en la vista
+    /**
+     * Muestra la lista de todos los usuarios registrados
+     */
     @GetMapping
     public String listarUsuarios(Model model){
         model.addAttribute("usuarios", usuarioService.listar());
         return "usuarios/lista";
     }
 
-    // formulario para crear un nuevo usuario, simplemente pasamos un nuevo objeto Usuario al formulario para que se pueda llenar
+    /**
+     * Muestra el formulario para crear un nuevo usuario
+     */
     @GetMapping("/nuevo")
     public String nuevoUsuario(Model model){
         model.addAttribute("usuario", new Usuario());
         return "usuarios/form";
     }
 
-    // Para guardar un nuevo usuario, recibimos el objeto Usuario desde el formulario y lo pasamos al servicio para crear el usuario
+    /**
+     * Guarda un nuevo usuario en el sistema.
+     * 
+     * La lógica de validación y encriptación se maneja en el servicio.
+     */
     @PostMapping("/guardar")
     public String guardarUsuario(@ModelAttribute Usuario usuario){
 
@@ -48,7 +71,9 @@ public class UsuarioController {
         return "redirect:/admin/usuarios";
     }
 
-    // Para poder editar un usuario, primero obtenemos el usuario por su ID y lo pasamos al formulario
+    /**
+     * Carga los datos de un usuario para edición
+     */
     @GetMapping("/editar/{id}")
     public String editarUsuario(@PathVariable Long id, Model model){
 
@@ -60,7 +85,9 @@ public class UsuarioController {
         return "usuarios/form";
     }
 
-    // para eliminar un usuario, simplemente lo eliminamos por su ID y redirigimos a la lista de usuarios
+    /**
+     * Elimina un usuario por su ID
+     */
     @GetMapping("/eliminar/{id}")
     public String eliminarUsuario(@PathVariable Long id){
 
