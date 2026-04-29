@@ -126,6 +126,7 @@ public class AuthController {
                     auth.getAuthorities()
             );
 
+            // Actualizar el contexto de seguridad con la nueva autenticación
             SecurityContextHolder.getContext().setAuthentication(nuevaAuth);
 
             model.addAttribute("usuario", usuarioDB);

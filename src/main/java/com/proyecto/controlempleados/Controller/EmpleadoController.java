@@ -81,19 +81,19 @@ public class EmpleadoController {
                 model.addAttribute("error", "Esa cédula ya existe");
                 return "empleado-form";
             }
-
+            // Verifica duplicados excluyendo el mismo registro
             if (empleadoService.existeCorreoOtroEmpleado(empleado.getCorreo(), empleado.getId())) {
                 model.addAttribute("error", "Ese correo ya existe");
                 return "empleado-form";
             }
-
+            // Verifica duplicados excluyendo el mismo registro
             if (empleadoService.existeTelefonoOtroEmpleado(empleado.getTelefono(), empleado.getId())) {
                 model.addAttribute("error", "Ese teléfono ya existe");
                 return "empleado-form";
             }
 
         } 
-        //VALIDACIÓN PARA CREACIÓN
+        //VALIDACIÓN PARA CREACIÓN 
         else {
 
             if (empleadoService.existeCedula(empleado.getCedula())) {
@@ -120,6 +120,11 @@ public class EmpleadoController {
 
     /**
      * Carga los datos de un empleado para edición
+     * Funcionamiento:
+     * - Recibe el ID desde la URL
+     * - Busca el empleado en la base de datos
+     * - Si no existe, redirige a la lista de empleados
+     * - Si existe, envía los datos a la vista para editar
      */
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
@@ -138,6 +143,10 @@ public class EmpleadoController {
 
     /**
      * Elimina un empleado por su ID
+     * Funcionamiento:
+     * - Recibe el ID desde la URL
+     * - Elimina el registro directamente en la base de datos
+     * - Redirige a la lista de empleados después de eliminar
      */
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {

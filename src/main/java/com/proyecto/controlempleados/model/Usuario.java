@@ -81,7 +81,7 @@ public class Usuario {
         this.rol = rol;
     }
 
-    // Getters y setters
+    // Getters y setters para todos los campos
 
     public Long getId() {
         return id;

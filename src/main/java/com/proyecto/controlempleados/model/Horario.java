@@ -48,7 +48,7 @@ public class Horario {
     // Constructor vacío requerido por JPA
     public Horario() {}
 
-    // Getters y setters
+    // Getters y setters para todos los campos
 
     public Long getId() {
         return id;

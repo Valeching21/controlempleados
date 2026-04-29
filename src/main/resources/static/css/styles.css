@@ -2,39 +2,53 @@
 ==========================================
 ESTILOS GENERALES
 ==========================================
-Diseño moderno con tonos oscuros y azules
-enfocado en claridad y usabilidad
+Se define una base visual consistente para toda la aplicación.
+Se utiliza un diseño moderno con colores oscuros y tonos azules
+para mejorar la experiencia visual del usuario.
 */
 
 *{
+    /* Reset de márgenes y paddings para evitar inconsistencias entre navegadores */
     margin:0;
     padding:0;
+
+    /* Asegura que padding y border no afecten el tamaño total */
     box-sizing:border-box;
+
+    /* Fuente principal del sistema */
     font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
+    /* Fondo con degradado para dar estilo moderno */
     background: linear-gradient(120deg,#1f3c44,#1a2f35);
+
+    /* Altura mínima para cubrir toda la pantalla */
     min-height:100vh;
 }
 
 /*==========================================
 MENU DE NAVEGACIÓN
 ==========================================
-Barra fija en la parte superior con fondo oscuro
-Enlaces claros y destacados
+Barra fija superior que permite navegar por el sistema.
+Se mantiene visible en todo momento (fixed).
 */
 
 .menu-admin{
-    position:fixed;
+    position:fixed; /* Fija el menú en la parte superior */
     top:0;
     left:0;
     width:100%;
-    background:#1f2d3d;
+
+    background:#1f2d3d; /* Color oscuro para contraste */
+
     padding:15px;
+
     display:flex;
-    justify-content:center;
+    justify-content:center; /* Centra los elementos */
     gap:30px;
+
+    /* Sombra para dar profundidad */
     box-shadow:0 3px 8px rgba(0,0,0,0.2);
 }
 
@@ -47,6 +61,7 @@ Enlaces claros y destacados
 }
 
 .menu-admin a:hover{
+    /* Efecto visual al pasar el mouse */
     background:#3498db;
 }
 
@@ -56,7 +71,7 @@ Enlaces claros y destacados
 }
 
 .logout-form{
-    margin-left:auto;
+    margin-left:auto; /* Lo envía al extremo derecho */
     display:flex;
     align-items:center;
 }
@@ -64,20 +79,23 @@ Enlaces claros y destacados
 /*==========================================
 CONTENIDO PRINCIPAL
 ==========================================
-Contenedores centrados con fondo blanco
-Sombra suave para destacar el contenido
+Contenedores centrados con fondo blanco para destacar el contenido
+sobre el fondo oscuro del sistema.
 */
 
 .container{
     background:white;
     padding:40px;
     border-radius:10px;
+
+    /* Sombra para efecto de tarjeta */
     box-shadow:0 10px 25px rgba(0,0,0,0.2);
+
     margin:auto;
-    margin-top:120px;
+    margin-top:120px; /* Espacio para no tapar con el menú */
 }
 
-
+/* Ajustes específicos según página */
 .home-page .container{
     width:420px;
 }
@@ -125,7 +143,6 @@ Sombra suave para destacar el contenido
     width:500px;
 }
 
-
 .empleados-page{
     padding-top:100px;  
 }
@@ -140,7 +157,7 @@ Sombra suave para destacar el contenido
     width:1250px;
 }
 
-
+/* Estilo general para títulos */
 h1,h2,h3{
     margin-bottom:20px;
     text-align:center;
@@ -150,11 +167,12 @@ h1,h2,h3{
 /*==========================================
 FORMULARIOS
 ==========================================
-Diseño limpio con campos bien espaciados
+Diseño limpio y organizado para facilitar la entrada de datos.
 */
+
 form{
     display:flex;
-    flex-direction:column;
+    flex-direction:column; /* Alinea los elementos verticalmente */
 }
 
 label{
@@ -173,23 +191,26 @@ input{
 /*==========================================
 ESTADOS DE LOS EMPLEADOS
 ==========================================
-Colores claros para empleados activos
-Colores grises para empleados bloqueados
+Se utilizan colores para indicar estados visuales.
 */
 
 .cedula-bloqueada{
+    /* Color gris para indicar campo deshabilitado */
     background:#e6e6e6;
     color:#666;
     border:1px solid #ccc;
+
+    /* Cursor indica que no se puede editar */
     cursor:not-allowed;
 }
-
 
 /*==========================================
 BOTONES DE ACCIÓN
 ==========================================
-Botones con colores vibrantes para acciones principales
-Colores de advertencia para acciones destructivas
+Botones con colores diferenciados según acción:
+- Azul: acción principal
+- Verde: acción positiva
+- Rojo: acción destructiva
 */
 
 button{
@@ -206,6 +227,7 @@ button:hover{
     background:#2980b9;
 }
 
+/* Botón de salida */
 .btn-salir{
     background:#e74c3c;
 }
@@ -214,7 +236,6 @@ button:hover{
     background:#c0392b;
 }
 
-
 .acciones{
     display:flex;
     justify-content:center;
@@ -222,6 +243,7 @@ button:hover{
     margin-bottom:20px;
 }
 
+/* Botón éxito */
 .btn-success{
     background:#27ae60;
 }
@@ -230,6 +252,7 @@ button:hover{
     background:#1e8449;
 }
 
+/* Botón peligro */
 .btn-danger{
     background:#e74c3c;
 }
@@ -241,8 +264,7 @@ button:hover{
 /*==========================================
 TABLAS DE EMPLEADOS Y HORARIOS
 ==========================================
-Diseño limpio con filas alternas para mejorar la legibilidad
-Encabezados destacados con fondo oscuro
+Diseño estructurado para facilitar lectura de datos.
 */
 
 .empleados-page table{
@@ -265,10 +287,11 @@ Encabezados destacados con fondo oscuro
 }
 
 .empleados-page tr:hover{
+    /* Resalta la fila al pasar el mouse */
     background:#f5f5f5;
 }
 
-
+/* Enlaces */
 a{
     color:#3498db;
     text-decoration:none;
@@ -281,7 +304,7 @@ a:hover{
 /*==========================================
 OTROS ESTILOS
 ==========================================
-Estilos para mensajes de error, botones de acción específicos y estados de empleados
+Incluye botones específicos y mensajes de error.
 */
 
 .btn-eliminar{
@@ -310,7 +333,7 @@ Estilos para mensajes de error, botones de acción específicos y estados de emp
     background:#1e8e3e;
 }
 
-
+/* Mensajes de error */
 .mensaje-error{
     color:#ff4d4d;
     font-weight:bold;
@@ -346,7 +369,7 @@ Estilos para mensajes de error, botones de acción específicos y estados de emp
 /*==========================================
 PÁGINA DE HORARIOS
 ==========================================
-Diseño similar a la página de empleados con tablas claras y botones de acción específicos
+Se utilizan colores para indicar el estado del usuario.
 */
 
 .horarios-page{
@@ -363,15 +386,16 @@ Diseño similar a la página de empleados con tablas claras y botones de acción
     width:1100px;
 }
 
+/* Estado visual de filas */
 .fila-activa{
-    background-color:#eafaf1; 
+    background-color:#eafaf1; /* Verde claro (activo) */
 }
 
 .fila-inactiva{
-    background-color:#fdecea;
+    background-color:#fdecea; /* Rojo claro (inactivo) */
 }
 
-
+/* Estado textual */
 .en-linea{
     color:#2ecc71;
     font-weight:bold;
@@ -382,7 +406,7 @@ Diseño similar a la página de empleados con tablas claras y botones de acción
     font-weight:bold;
 }
 
-
+/* Tabla de horarios */
 .horarios-page table{
     width:100%;
     border-collapse:collapse;
@@ -406,6 +430,7 @@ Diseño similar a la página de empleados con tablas claras y botones de acción
     background:#f5f5f5;
 }
 
+/* Botón de generación de reporte */
 .btn-reporte{
     background:#27ae60;
     color:white;

@@ -83,7 +83,7 @@ public class Empleado {
         this.puesto = puesto;
     }
 
-    // Getters y setters
+    // Getters y setters para todos los campos
 
     public Long getId() {
         return id;
