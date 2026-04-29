@@ -57,7 +57,7 @@ public class HorarioService {
         Optional<Horario> activoOpt =
                 repo.findTopByUsuarioAndHoraSalidaIsNullOrderByHoraEntradaDesc(usuario);
 
-        // ❌ Evita múltiples entradas sin salida
+        //No permitir múltiples entradas sin salida
         if (activoOpt.isPresent()) {
             throw new RuntimeException("⚠️ Ya registraste una entrada. Debes marcar salida antes de volver a ingresar.");
         }
@@ -81,14 +81,14 @@ public class HorarioService {
         Optional<Horario> activoOpt =
                 repo.findTopByUsuarioAndHoraSalidaIsNullOrderByHoraEntradaDesc(usuario);
 
-        // ❌ No permitir salida sin entrada
+        //No permitir salida sin entrada
         if (activoOpt.isEmpty()) {
             throw new RuntimeException("⚠️ No puedes registrar salida sin haber marcado una entrada primero.");
         }
 
         Horario activo = activoOpt.get();
 
-        // ❌ Validar que la salida sea después de la entrada
+        //Validar que la salida sea después de la entrada
         if (LocalDateTime.now().isBefore(activo.getHoraEntrada())) {
             throw new RuntimeException("⚠️ La hora de salida no puede ser antes de la entrada.");
         }

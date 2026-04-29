@@ -16,6 +16,7 @@ Permite:
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
+    <meta charset="UTF-8">
     <title>Horarios</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
@@ -28,15 +29,15 @@ Permite:
         <!-- ADMIN -->
         <div sec:authorize="hasRole('ADMIN')" class="menu-links">
             <a href="/home">Inicio</a>
-            <a href="/empleados/guardar">Crear Empleado</a>
-            <a href="/empleados">Administrar Empleados</a>
-            <a href="/horarios">Horarios</a>
+            <a href="/empleados/guardar"> ➕ Crear Empleado</a>
+            <a href="/empleados"> 📋 Administrar Empleados</a>
+            <a href="/horarios"> 🕗 Horarios</a>
         </div>
 
         <!-- EMPLEADO -->
         <div sec:authorize="hasRole('EMPLEADO')" class="menu-links">
             <a href="/home">Inicio</a>
-            <a href="/horarios">Horarios</a>
+            <a href="/horarios">🕗 Horarios</a>
         </div>
 
     </nav>
@@ -99,7 +100,7 @@ Permite:
         <!-- BOTÓN PDF SOLO ADMIN -->
         <div sec:authorize="hasRole('ADMIN')">
             <a href="/horarios/reporte-pdf">
-                <button class="btn-reporte">📄 Generar PDF</button>
+                <button class="btn-reporte">📄 Generar Reporte</button>
             </a>
         </div>
 
